@@ -1,0 +1,8 @@
+server:
+    port: 8080
+
+spring:
+  rsocket:
+    server:
+      port: 9000
+      #transport: websocket
