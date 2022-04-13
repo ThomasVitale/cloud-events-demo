@@ -95,9 +95,30 @@ class CloudEventController {
 					.withId(UUID.randomUUID().toString())
 					.withSource(URI.create("https://thomasvitale.com/books"))
 					.withType("com.thomasvitale.events.Message")
-					.withData(convertToBytes(new Message("Book: " + index)))
+					.withData(convertToBytes(new Message(index, "Book: " + index)))
 					.build())
 			).log();
+	}
+
+	@MessageMapping("infinite-stream-ce")
+	public Flux<CloudEvent> infiniteStreamCloudEvents() {
+		log.info("Received infinite-stream request.");
+		return Flux.interval(Duration.ofSeconds(1))
+				.map(index -> CloudEventBuilder.v1()
+						.withId(UUID.randomUUID().toString())
+						.withSource(URI.create("https://thomasvitale.com"))
+						.withType("com.thomasvitale.events.Message")
+						.withData(convertToBytes(new Message(index, "Book: " + index)))
+						.build())
+				.log();
+	}
+
+	@MessageMapping("infinite-stream")
+	public Flux<Message> infiniteStream() {
+		log.info("Received infinite-stream request.");
+		return Flux.interval(Duration.ofSeconds(1))
+				.map(index -> new Message(index, "Message " + index))
+				.log();
 	}
 
 	private String convertToString(CloudEventData eventData) {
@@ -150,4 +171,4 @@ class RSocketConfiguration {
 
 record Book(Long id, String title){}
 
-record Message(String content){}
+record Message(Long id, String content){}

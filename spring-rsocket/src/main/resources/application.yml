@@ -5,4 +5,4 @@ spring:
   rsocket:
     server:
       port: 9000
-      #transport: websocket
+      transport: websocket

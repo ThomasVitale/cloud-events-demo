@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-light" routerLink="/">Angular RSocket</a>
+  </div>
+</nav>
+
+<div class="container pt-3">
+  <div *ngIf="messages.length > 0">
+    <h2>Request-Stream</h2>
+    <p>The backend produces a new event at regular time intervals.</p>
+    <div class="table-responsive">
+      <table class="table table-centered table-hover mb-0" id="datatable">
+        <thead>
+        <tr>
+          <th class="border-top-0" scope="col">Id</th>
+          <th class="border-top-0" scope="col">Content</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let message of messages">
+          <td>{{message.id}}</td>
+          <td>{{message.content}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+
