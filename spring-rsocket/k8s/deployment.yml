@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-rsocket
+  labels:
+    app: spring-rsocket
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring-rsocket
+  template:
+    metadata:
+      labels:
+        app: spring-rsocket
+    spec:
+      containers:
+        - name: spring-rsocket
+          image: spring-rsocket:0.0.1-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+            - containerPort: 9000

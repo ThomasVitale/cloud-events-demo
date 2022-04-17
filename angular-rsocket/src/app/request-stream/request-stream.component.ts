@@ -12,15 +12,15 @@ export class RequestStreamComponent implements OnInit, OnDestroy {
 
   messages: any[] = [];
   client: any;
-  streamSettings: CloudEvent<string>;
+  //streamSettings: CloudEvent<string>;
 
   constructor() {
-    this.streamSettings = new CloudEvent({
-      source: "angular-rsocket",
-      type: "com.thomasvitale.events.Settings",
-      data: "{'period': 2}",
-      datacontenttype: "application/json"
-    });
+    // this.streamSettings = new CloudEvent({
+    //   source: "angular-rsocket",
+    //   type: "com.thomasvitale.events.Settings",
+    //   data: "{'period': 2}",
+    //   datacontenttype: "application/json"
+    // });
   }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class RequestStreamComponent implements OnInit, OnDestroy {
         metadataMimeType: 'message/x.rsocket.routing.v0',
       },
       transport: new RSocketWebSocketClient({
-        url: 'ws://localhost:9000'
+        url: 'ws://127.0.0.1.nip.io/ws/'
       }),
     });
 
@@ -46,7 +46,7 @@ export class RequestStreamComponent implements OnInit, OnDestroy {
       onComplete: (socket: any) => {
         socket
           .requestStream({
-            data: this.streamSettings,
+            data: null,
             metadata: this.route('infinite-stream-ce')
           }).subscribe({
           onComplete: () => console.log('complete'),
